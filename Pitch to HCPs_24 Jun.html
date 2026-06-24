@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHPC | Secure Your Practice, Protect Your Patients</title>
+    <style>
+        :root {
+            --navy: #0A1628;
+            --teal: #0B7B7B;
+            --teal-bright: #0EA5A5;
+            --red: #B32A2A;
+            --slate: #3D5166;
+            --mist: #F5F7F8;
+            --white: #FFFFFF;
+            --amber: #A85C00;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; background-color: var(--navy); color: var(--white); line-height: 1.6;
+        }
+        .container { padding: 20px; max-width: 480px; margin: 0 auto; }
+        
+        /* Main Title */
+        .hero { text-align: center; padding: 40px 0 20px; }
+        .hero h1 { font-size: 26px; line-height: 1.2; font-weight: 800; color: var(--white); margin: 0; }
+        .hero p { color: var(--teal-bright); font-weight: 600; font-size: 14px; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Timeline Section */
+        .section-header { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin: 30px 0 15px; }
+        .section-header h2 { font-size: 18px; color: var(--teal-bright); margin: 0; }
+        
+        .timeline-card { background: rgba(255,255,255,0.05); border-left: 4px solid var(--red); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .timeline-date { font-weight: 800; font-size: 12px; color: #FF9999; margin-bottom: 5px; }
+        .timeline-title { font-weight: 700; font-size: 15px; margin-bottom: 5px; }
+        .timeline-body { font-size: 13px; color: #C0D4E0; margin-bottom: 8px; }
+        .source-link { font-size: 10px; color: #7A9AAA; text-decoration: none; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* CME Responsibility Box */
+        .cme-box { background: var(--white); color: var(--navy); padding: 20px; border-radius: 12px; margin: 25px 0; border-top: 5px solid var(--teal); }
+        .cme-box h3 { margin: 0 0 10px 0; font-size: 16px; color: var(--teal); display: flex; align-items: center; gap: 8px; }
+        .cme-box p { font-size: 13px; margin: 0 0 10px 0; line-height: 1.5; }
+        .cme-source { font-size: 10px; color: var(--slate); font-style: italic; }
+
+        /* Solution Points */
+        .pain-point { border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 15px; background: rgba(11, 123, 123, 0.05); }
+        .pain-point h3 { margin: 0 0 8px 0; font-size: 15px; color: var(--teal-bright); }
+        .pain-point p { font-size: 13px; color: #C0D4E0; margin: 0; }
+
+        /* Trust & Pilot */
+        .trust-section { text-align: center; padding: 25px; background: rgba(255,255,255,0.03); border-radius: 12px; margin: 30px 0; }
+        .trust-logo { font-weight: 900; font-size: 20px; color: var(--white); margin-bottom: 5px; }
+        .trust-text { font-size: 12px; color: #7A9AAA; }
+
+        .cta-box { background: linear-gradient(135deg, var(--teal), #085A5A); padding: 25px; border-radius: 12px; text-align: center; }
+        .cta-box h3 { margin: 0 0 10px 0; font-size: 18px; }
+        .cta-box p { font-size: 13px; margin-bottom: 20px; opacity: 0.9; }
+        .cta-button { display: block; background: var(--white); color: var(--teal); text-decoration: none; padding: 14px; border-radius: 8px; font-weight: 800; font-size: 15px; }
+        
+        .footer { text-align: center; font-size: 10px; color: #3A5060; padding: 30px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Secure Your Practice,<br>Protect Your Patients</h1>
+            <p>The PHPC Standard</p>
+        </div>
+
+        <div class="section-header">
+            <h2>The Burning Reality</h2>
+        </div>
+
+        <div class="timeline-card">
+            <div class="timeline-date">MAY 2023</div>
+            <div class="timeline-title">Major Private Clinic Data Incident</div>
+            <div class="timeline-body">Personal data and medical history of approx. 100,000 patients compromised due to a management system vulnerability. [1], [2], [3]</div>
+            <a href="https://www.scmp.com/news/hong-kong/health-environment/article/3219827/personal-data-medical-history-100000-patients-may-have-been-leaked-cyberattack-hong-kong-healthcare" class="source-link">Source: SCMP</a>
+        </div>
+
+        <div class="timeline-card" style="border-left-color: var(--teal-bright);">
+            <div class="timeline-date" style="color: var(--teal-bright);">OCTOBER 13, 2025</div>
+            <div class="timeline-title">Regulatory Commencement</div>
+            <div class="timeline-body">DH started accepting clinic license applications under Cap. 633. CMEs must now demonstrate robust security during on-site inspections. [4], [5], [6]</div>
+        </div>
+
+        <div class="timeline-card">
+            <div class="timeline-date">APRIL 2026</div>
+            <div class="timeline-title">Hospital Authority Breach</div>
+            <div class="timeline-body">Over 56,000 patient records from Kowloon East Cluster leaked on a third-party platform. [7], [8], [9], [10]</div>
+            <a href="https://www.info.gov.hk/gia/general/202604/04/P2026040400462.htm" class="source-link">Source: HK Government / HA</a>
+        </div>
+
+        <div class="cme-box">
+            <h3>⚕️ CME’s Personal Duty</h3>
+            <p>Under <strong>Cap. 633</strong>, Chief Medical Executives hold specific legal responsibility for day-to-day administration, including patient data security standards. [4], [6], [11]</p>
+            <p>During DH on-site inspections, you must demonstrate exactly how sensitive patient information is protected. [6]</p>
+            <div class="cme-source">Source: ORPHF (Cap. 633 Regulatory Regime)</div>
+        </div>
+
+        <div class="section-header">
+            <h2>Solving the ‘Human Factor’</h2>
+        </div>
+
+        <div class="pain-point">
+            <h3>Replace Vulnerable Personal Channels</h3>
+            <p>Eliminate frontline staff handling <strong>Patient Personal Data (text or images)</strong> on personal WhatsApp or WeChat accounts. [12]</p>
+        </div>
+
+        <div class="pain-point">
+            <h3>Encrypted Shield</h3>
+            <p>Directly encrypted clinical channel bypasses staff devices entirely. Patient data reaches the clinic’s secure folder directly. [13], [14], [12]</p>
+        </div>
+
+        <div class="pain-point">
+            <h3>Zero-Touch CMS Sync</h3>
+            <p>Lab results and reports sync directly from your CMS to the portal upon request, removing manual staff handling and error risks. [15], [14], [16], [17]</p>
+        </div>
+
+        <div class="trust-section">
+            <div class="trust-logo">Powered by ASL</div>
+            <div class="trust-text">
+                The technology partner with over 50 years of Hong Kong government healthcare IT expertise. [18], [19], [20], [21]
+                <br><br>
+                Foundational infrastructure contributor to <strong>HA Go</strong>. [20], [22]
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h3>Exclusive Pilot Partner</h3>
+            <p>Be among the first 20 clinics to strengthen your readiness for DH inspections. Customize your workflow without development costs. [13], [23], [24]</p>
+            <a href="mailto:IrisPhpc@gmail.com?subject=Pilot Program Enquiry" class="cta-button">Join the Pilot →</a>
+            <p style="margin-top: 15px; font-size: 11px;">Founding Partner Benefit: First 6 months waived</p>
+        </div>
+
+        <div class="footer">
+            © 2026 PHPC Patient Portal Programme<br>
+            Confidential · Regulatory references based on HK Cap. 633 [25]
+        </div>
+    </div>
+</body>
+</html>
+
