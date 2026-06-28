@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHPC Patient Portal — Secure Your Practice. Protect Your Patients.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter','Segoe UI',sans-serif;background:#fff;color:#141E2A;line-height:1.6;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 28px;transition:all .3s;}
+nav.solid{background:rgba(255,255,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid #D4E0E8;box-shadow:0 2px 16px rgba(0,0,0,.06);}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-links{display:flex;align-items:center;gap:20px;}
+.nav-links a{font-size:12px;font-weight:600;color:#ffffffbb;text-decoration:none;transition:color .2s;letter-spacing:.02em;}
+nav.solid .nav-links a{color:#3D5166;}
+.nav-links a:hover{color:#fff;}
+nav.solid .nav-links a:hover{color:#141E2A;}
+.btn-pilot{background:#0B7B7B;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;transition:background .2s;}
+.btn-pilot:hover{background:#0EA5A5;}
+.lang-btn{background:#ffffff18;border:1px solid #ffffff30;border-radius:5px;padding:5px 10px;font-size:11px;font-weight:700;color:#ffffffcc;cursor:pointer;position:relative;transition:all .2s;}
+nav.solid .lang-btn{background:#F0FAFA;border-color:#0B7B7B40;color:#0B7B7B;}
+.lang-tooltip{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid #D4E0E8;border-radius:6px;padding:10px 14px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:200;}
+.lang-btn:hover .lang-tooltip{display:block;}
+.lang-tooltip p{font-size:11px;color:#3D5166;margin-bottom:2px;}
+.lang-tooltip span{font-size:10px;color:#6A8898;font-style:italic;}
+
+/* ── LOGO ── */
+.logo{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#0B7B7B,#0EA5A5);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 14px #0B7B7B40;}
+.logo-text-main{font-weight:900;font-size:15px;color:#fff;letter-spacing:-.01em;line-height:1.1;}
+nav.solid .logo-text-main{color:#141E2A;}
+.logo-text-sub{font-weight:600;font-size:9px;color:#0B7B7B;letter-spacing:.05em;text-transform:uppercase;}
+
+/* ── SECTIONS ── */
+section{padding:80px 32px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-inner-sm{max-width:1050px;margin:0 auto;}
+.section-inner-md{max-width:980px;margin:0 auto;}
+.eyebrow{font-size:11px;font-weight:800;color:#0B7B7B;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;}
+.eyebrow.white{color:#0EA5A5;}
+h2{font-size:32px;font-weight:900;color:#141E2A;letter-spacing:-.02em;margin-bottom:12px;}
+h2.white{color:#fff;}
+.lead{font-size:15px;color:#3D5166;line-height:1.8;max-width:580px;margin:0 auto;}
+.lead.center{text-align:center;}
+
+/* ── HERO ── */
+#hero{background:linear-gradient(155deg,#0A1628 0%,#112240 55%,#082828 100%);min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:110px 32px 64px;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;opacity:.03;background-image:linear-gradient(#0EA5A5 1px,transparent 1px),linear-gradient(90deg,#0EA5A5 1px,transparent 1px);background-size:52px 52px;pointer-events:none;}
+.hero-glow1{position:absolute;top:15%;right:5%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,#0B7B7B15 0%,transparent 70%);pointer-events:none;}
+.hero-glow2{position:absolute;bottom:10%;left:2%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#1A5F9A12 0%,transparent 70%);pointer-events:none;}
+.hero-shield{position:absolute;right:8%;top:50%;transform:translateY(-50%);opacity:.04;}
+.hero-content{max-width:860px;margin:0 auto;position:relative;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#0B7B7B22;border:1px solid #0B7B7B40;border-radius:4px;padding:5px 14px;margin-bottom:24px;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#0EA5A5;}
+.hero-badge span{font-size:11px;font-weight:700;color:#0EA5A5;letter-spacing:.09em;text-transform:uppercase;}
+h1{font-size:clamp(26px,3.8vw,50px);font-weight:900;color:#fff;line-height:1.12;letter-spacing:-.025em;margin-bottom:10px;}
+h1 .teal{color:#0EA5A5;}
+.hero-sub{font-size:14px;font-weight:500;color:#90C0D0;margin-bottom:28px;line-height:1.6;}
+.hero-sub .dim{color:#70A0B0;}
+.incident-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+.incident-card{background:#ffffff08;border-radius:10px;padding:16px 18px;}
+.incident-card.amber{border:1px solid #8F500030;border-left:3px solid #8F5000;}
+.incident-card.red{border:1px solid #B32A2A30;border-left:3px solid #B32A2A;}
+.incident-label{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.incident-label.amber{color:#8F5000;}
+.incident-label.red{color:#FF9999;}
+.incident-num{font-size:26px;font-weight:900;margin-bottom:4px;}
+.incident-num.amber{color:#FFD0A0;}
+.incident-num.red{color:#FFB0B0;}
+.incident-desc{font-size:12px;color:#8BAAB8;line-height:1.6;margin-bottom:6px;}
+.incident-note{font-size:11px;color:#5A7080;font-style:italic;}
+.hero-context{background:#ffffff06;border:1px solid #ffffff10;border-radius:8px;padding:12px 18px;margin-bottom:28px;}
+.hero-context p{font-size:13px;color:#7A9AAA;line-height:1.75;margin:0;}
+.hero-body{font-size:14px;color:#A8C4D0;line-height:1.85;max-width:620px;margin-bottom:36px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px;}
+.btn-primary{background:#0B7B7B;color:#fff;border:none;border-radius:8px;padding:14px 28px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;box-shadow:0 4px 20px #0B7B7B50;transition:all .2s;}
+.btn-primary:hover{background:#0EA5A5;}
+.btn-outline{background:transparent;color:#fff;border:1px solid #ffffff40;border-radius:8px;padding:14px 28px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;}
+.btn-outline:hover{background:#ffffff10;border-color:#ffffff70;}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #ffffff10;padding-top:28px;gap:0;}
+.stat-item{padding-right:20px;border-right:1px solid #ffffff10;}
+.stat-item:last-child{border-right:none;}
+.stat-item:not(:first-child){padding-left:20px;}
+.stat-n{font-size:19px;font-weight:900;color:#0EA5A5;margin-bottom:5px;}
+.stat-l{font-size:9.5px;color:#90B4C4;line-height:1.65;white-space:pre-line;}
+.asl-strip{margin-top:24px;display:inline-flex;align-items:center;gap:10px;background:#ffffff10;border:1px solid #ffffff20;border-radius:6px;padding:8px 16px;}
+.asl-dot{width:6px;height:6px;border-radius:50%;background:#0EA5A5;flex-shrink:0;}
+.asl-text{font-size:11px;color:#B0CCD8;line-height:1.5;}
+.asl-text strong{color:#E0F0F8;}
+
+/* ── REALITY ── */
+#reality{background:#fff;}
+.timeline{position:relative;margin-bottom:44px;}
+.timeline-line{position:absolute;left:130px;top:24px;bottom:24px;width:2px;background:linear-gradient(#B32A2A80,#B32A2A50,#0B7B7B80);z-index:0;}
+.timeline-row{display:flex;gap:0;margin-bottom:24px;position:relative;z-index:1;}
+.timeline-date{width:118px;flex-shrink:0;text-align:right;padding-right:20px;padding-top:6px;font-size:13px;font-weight:800;line-height:1.3;}
+.timeline-dot-wrap{width:24px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:7px;}
+.timeline-dot{width:14px;height:14px;border-radius:50%;border:3px solid #fff;flex-shrink:0;}
+.timeline-card{flex:1;padding-left:20px;}
+.timeline-card-inner{background:#fff;border:1px solid #D4E0E8;border-radius:10px;padding:18px 22px;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.tc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:12px;}
+.tc-icon{font-size:28px;flex-shrink:0;}
+.tc-title{font-size:17px;font-weight:800;color:#141E2A;line-height:1.25;margin-bottom:3px;}
+.tc-cn{font-size:13px;font-weight:600;}
+.tc-body{font-size:14px;color:#3D5166;line-height:1.8;margin:10px 0 6px;}
+.tc-note{font-size:13px;font-weight:600;font-style:italic;background:#F5F7F8;border-radius:6px;padding:8px 12px;margin:8px 0;}
+.src-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#0B7B7B;background:#E4F4F4;border:1px solid #0B7B7B30;border-radius:3px;padding:2px 8px;text-decoration:none;margin-top:6px;}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;border-radius:3px;padding:2px 7px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
+
+/* CME box */
+.cme-box{background:#0F1E32;border:1px solid #0EA5A530;border-radius:12px;padding:28px 32px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;}
+.cme-icon{font-size:40px;}
+.cme-eyebrow{font-size:11px;font-weight:800;color:#0EA5A5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.cme-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:16px;}
+.cme-body{font-size:14px;color:#C8D8E4;line-height:1.9;margin-bottom:14px;}
+
+/* ── 6 KEYS ── */
+#keys{background:#F5F7F8;}
+.keys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.key-card{background:#fff;border:1px solid #D4E0E8;border-radius:10px;padding:20px 18px;cursor:pointer;transition:all .25s;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.key-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);}
+.key-card.open{background:#0A1628;}
+.key-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.key-icon{font-size:26px;}
+.key-en{font-size:16px;font-weight:900;color:#141E2A;line-height:1.2;margin-bottom:4px;}
+.key-card.open .key-en{color:#fff;}
+.key-cn{font-size:15px;font-weight:800;line-height:1.2;letter-spacing:.02em;}
+.key-tagline{font-size:12px;font-style:italic;color:#6A8898;line-height:1.45;}
+.key-card.open .key-tagline{color:#8BAAB8;}
+.key-body{font-size:13.5px;color:#A0BCC8;line-height:1.8;margin:0;border-top:1px solid #ffffff12;padding-top:12px;margin-top:10px;}
+.key-toggle{margin-top:10px;font-size:11px;font-weight:600;}
+
+/* ── FEATURES ── */
+#features{background:#fff;}
+.risk-callout{background:#FEF3F3;border:1px solid #B32A2A20;border-left:4px solid #B32A2A;border-radius:8px;padding:14px 20px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start;text-align:left;}
+.risk-callout-icon{font-size:20px;flex-shrink:0;}
+.risk-callout-title{font-size:14px;font-weight:700;color:#B32A2A;margin-bottom:5px;}
+.risk-callout-body{font-size:13px;color:#7A2020;line-height:1.75;margin:0;}
+.toggle-bar{display:inline-flex;background:#F5F7F8;border:1px solid #D4E0E8;border-radius:8px;padding:4px;gap:4px;}
+.toggle-btn{padding:8px 22px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;background:transparent;color:#3D5166;}
+.toggle-btn.active{background:#0B7B7B;color:#fff;box-shadow:0 2px 8px #0B7B7B30;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.feature-card{background:#F5F7F8;border-radius:10px;border:1px solid #D4E0E8;padding:20px 18px;}
+.feature-icon{font-size:24px;margin-bottom:10px;}
+.feature-en{font-size:14px;font-weight:800;color:#141E2A;margin-bottom:3px;line-height:1.3;}
+.feature-cn{font-size:12px;font-weight:700;margin-bottom:12px;}
+.feature-body{font-size:13.5px;color:#3D5166;line-height:1.8;margin:0;}
+
+/* ── INFRA ── */
+#infra{background:#0A1628;padding:80px 32px;}
+#infra h2{color:#fff;}
+.infra-lead{font-size:15px;color:#7A9AAA;max-width:680px;margin:0 auto;line-height:1.9;}
+.flow-box{background:#060F1C;border-radius:12px;padding:30px 24px;margin-bottom:24px;border:1px solid #ffffff08;}
+.flow-title{font-size:11px;font-weight:700;color:#0EA5A5;text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:22px;}
+.flow-grid{display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr 32px 1fr;align-items:center;}
+.flow-node{border-radius:8px;padding:14px 10px;text-align:center;}
+.flow-node.regular{background:#0F2035;border:1px solid #ffffff14;}
+.flow-node.highlight{background:linear-gradient(135deg,#0B7B7B40,#0EA5A528);border:1px solid #0B7B7B70;}
+.flow-node-icon{font-size:24px;margin-bottom:6px;}
+.flow-node-label{font-size:11px;font-weight:800;color:#fff;margin-bottom:2px;}
+.flow-node.highlight .flow-node-label{color:#0EA5A5;}
+.flow-node-sub{font-size:9px;color:#90B4C4;margin-bottom:8px;}
+.flow-node-item{font-size:8.5px;color:#A0C0D0;background:#ffffff10;border-radius:3px;padding:2px 5px;margin-bottom:3px;border:1px solid #ffffff14;}
+.flow-node.highlight .flow-node-item{color:#E0F4F8;}
+.flow-arrow{text-align:center;}
+.flow-arrow-icon{font-size:16px;color:#0EA5A5;}
+.flow-arrow-label{font-size:7.5px;color:#7ECFDA;margin-top:2px;line-height:1.4;}
+.flow-note{text-align:center;margin-top:16px;font-size:11px;color:#90B4C4;font-style:italic;}
+.cred-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.cred-card{background:#0A1E30;border-radius:8px;padding:18px 16px;border:1px solid #ffffff08;}
+.cred-icon{font-size:24px;margin-bottom:8px;}
+.cred-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;}
+.cred-cn{font-size:11px;font-weight:600;color:#0EA5A5;margin-bottom:8px;}
+.cred-desc{font-size:12.5px;color:#B0CCD8;line-height:1.7;margin:0;}
+.bi-box{background:#0F2035;border-radius:10px;border:1px solid #ffffff14;padding:20px 24px;display:flex;gap:14px;align-items:flex-start;}
+.bi-icon{font-size:22px;flex-shrink:0;}
+.bi-title{font-weight:700;font-size:14px;color:#0EA5A5;margin-bottom:8px;}
+.bi-body{font-size:13.5px;color:#C0D8E4;margin:0;line-height:1.85;}
+.bi-body strong{color:#fff;}
+
+/* ── WHO ── */
+#who{background:#F5F7F8;}
+.role-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;justify-content:center;}
+.role-tab{padding:10px 18px;border-radius:7px;cursor:pointer;border:2px solid #D4E0E8;background:#fff;color:#3D5166;font-size:13px;font-weight:700;transition:all .2s;}
+.role-panel{background:#fff;border-radius:12px;border:1px solid #D4E0E8;padding:30px 34px;display:grid;grid-template-columns:1fr 1fr;gap:32px;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+.role-icon{font-size:36px;margin-bottom:12px;}
+.role-title{font-size:24px;font-weight:900;color:#141E2A;margin-bottom:4px;}
+.role-cn{font-size:15px;font-weight:700;margin-bottom:18px;}
+.role-desc{font-size:14px;color:#3D5166;line-height:1.9;margin:0;}
+.gains-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;margin-bottom:16px;}
+.gain-row{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.gain-dot-wrap{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.gain-dot{width:7px;height:7px;border-radius:50%;}
+.gain-text{font-size:14px;color:#3D5166;line-height:1.7;}
+
+/* ── PILOT ── */
+#pilot{background:#fff;}
+.pilot-teal{font-size:16px;font-weight:600;color:#0B7B7B;margin-bottom:12px;}
+.exchange-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px;}
+.exchange-card{background:#F5F7F8;border-radius:10px;padding:22px 24px;border:1px solid #D4E0E8;}
+.exchange-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;}
+.exchange-row{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+.exchange-arrow{font-size:16px;font-weight:900;line-height:1;flex-shrink:0;}
+.exchange-text{font-size:14px;color:#3D5166;line-height:1.7;}
+.timeline-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.step-card{background:#F5F7F8;border-radius:8px;padding:18px 16px;border:1px solid #D4E0E8;border-top:3px solid #0B7B7B;}
+.step-icon{font-size:24px;margin-bottom:8px;}
+.step-phase{font-size:11px;color:#0B7B7B;font-weight:700;margin-bottom:4px;}
+.step-label{font-size:14px;font-weight:800;color:#141E2A;margin-bottom:8px;}
+.step-detail{font-size:12.5px;color:#3D5166;margin:0;line-height:1.65;}
+.cta-box{background:#0A1628;border-radius:12px;padding:30px 34px;text-align:center;}
+.cta-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:10px;}
+.cta-body{font-size:14px;color:#A8C4D0;margin-bottom:28px;line-height:1.85;}
+.qr-link{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;display:inline-flex;}
+.qr-visual{width:140px;height:140px;background:linear-gradient(135deg,#0F2A3A,#0A1E2E);border:2px solid #0B7B7B;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 4px 24px #0B7B7B30;transition:all .2s;}
+.qr-visual:hover{border-color:#0EA5A5;box-shadow:0 6px 32px #0B7B7B60;}
+.qr-label{font-size:10px;font-weight:700;color:#0EA5A5;letter-spacing:.06em;}
+.qr-caption{font-size:12px;color:#90B4C4;font-style:italic;}
+
+/* ── ABOUT ── */
+#about{background:#F5F7F8;padding:72px 32px;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+.about-eyebrow{font-size:11px;font-weight:800;color:#0B7B7B;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;}
+.about-title{font-size:28px;font-weight:900;color:#141E2A;margin-bottom:18px;letter-spacing:-.02em;line-height:1.2;}
+.about-body{font-size:14px;color:#3D5166;line-height:1.9;margin-bottom:14px;}
+.stat-cards{display:flex;flex-direction:column;gap:14px;}
+.stat-card{background:#fff;border-radius:8px;border:1px solid #D4E0E8;padding:14px 18px;display:flex;gap:16px;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.stat-card-n{font-size:14px;font-weight:900;color:#0B7B7B;min-width:90px;flex-shrink:0;line-height:1.3;}
+.stat-card-l{font-size:13px;color:#3D5166;line-height:1.6;}
+
+/* ── FOOTER ── */
+footer{background:#0A1628;padding:44px 32px 24px;border-top:1px solid #ffffff08;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:36px;flex-wrap:wrap;}
+.footer-brand p{font-size:13px;color:#3A5060;margin-top:12px;max-width:300px;line-height:1.8;}
+.footer-brand .dim{font-size:12px;color:#2A3C48;display:block;}
+.footer-brand .dimmer{font-size:11px;color:#1E2E38;display:block;}
+.footer-cols{display:flex;gap:44px;flex-wrap:wrap;}
+.footer-col-title{font-size:10px;font-weight:700;color:#0EA5A5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+.footer-col a,.footer-col div{font-size:13px;color:#3A5060;margin-bottom:9px;display:block;text-decoration:none;}
+.footer-col a{color:#0EA5A5;}
+.footer-col a:hover{color:#fff;}
+.footer-qr-label{font-size:13px;color:#5A7080;margin-bottom:16px;}
+.footer-qr{width:90px;height:90px;border:2px dashed #1A3040;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#040A10;gap:5px;}
+.footer-qr-icon{font-size:24px;}
+.footer-qr-text{font-size:8px;color:#2A4050;text-align:center;line-height:1.4;}
+.footer-bottom{border-top:1px solid #ffffff07;padding-top:16px;}
+.footer-disclaimer{font-size:10px;color:#1E3040;line-height:1.75;margin-bottom:8px;}
+.footer-copy{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-copy span{font-size:10px;color:#1A2A38;}
+
+/* ── FADE IN ── */
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .keys-grid,.features-grid,.cred-grid,.timeline-steps,.exchange-grid,.role-panel,.about-grid{grid-template-columns:1fr!important;}
+  .flow-grid{grid-template-columns:1fr!important;}
+  .flow-arrow{display:none;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .incident-grid{grid-template-columns:1fr;}
+  nav .nav-links{display:none;}
+}
+
+@media print{
+  nav{display:none;}
+  .fade-in{opacity:1!important;transform:none!important;}
+  section{page-break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L4 5v5c0 3.5 2.5 6.5 6 7.5C14 16.5 16 13.5 16 10V5L10 2z" fill="white" fill-opacity="0.15" stroke="white" stroke-width="1.4"/>
+          <rect x="7.5" y="9" width="5" height="5" rx="1" fill="white"/>
+          <path d="M8.5 9V7.5a1.5 1.5 0 013 0V9" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text-main">PHPC</div>
+        <div class="logo-text-sub">Patient Portal</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#reality">For Clinics &amp; CMEs</a>
+      <a href="#who">For Patients</a>
+      <a href="#infra">Security &amp; Compliance</a>
+      <a href="#about">About PHPC</a>
+      <a href="#pilot">Pilot Programme</a>
+      <div class="lang-btn">中文
+        <div class="lang-tooltip">
+          <p>繁體中文版本</p>
+          <span>Coming soon · 即將推出</span>
+        </div>
+      </div>
+      <a href="#pilot" class="btn-pilot">Become a Pilot Partner →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-shield">
+    <svg width="320" height="360" viewBox="0 0 100 110" fill="none">
+      <path d="M50 5L10 22v28c0 22 17 41 40 47 23-6 40-25 40-47V22L50 5z" fill="#0EA5A5"/>
+      <path d="M35 55l10 10 20-20" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>PHPC Patient Portal · The PHPC Standard</span>
+    </div>
+    <h1>Secure Your Practice.<br><span class="teal">Protect Your Patients.</span></h1>
+    <div class="hero-sub">
+      Digital Front Door for Private Healthcare &nbsp;·&nbsp; Healthcare Interoperability Layer<br>
+      <span class="dim">Empowering clinic-patient connectivity through structured, secure digital self-services</span>
+    </div>
+    <div class="incident-grid">
+      <div class="incident-card amber">
+        <div class="incident-label amber">Private Sector · May 2023</div>
+        <div class="incident-num amber">100,000</div>
+        <div class="incident-desc">patients affected at a leading private multi-clinic group</div>
+        <div class="incident-note">External cyberattack on clinic management system</div>
+      </div>
+      <div class="incident-card red">
+        <div class="incident-label red">Public Sector · April 2026</div>
+        <div class="incident-num red">56,000</div>
+        <div class="incident-desc">patient records leaked from HA Kowloon East Cluster</div>
+        <div class="incident-note">Insider with authorised system access · Criminal arrest</div>
+      </div>
+    </div>
+    <div class="hero-context">
+      <p>Two sectors. Two threat types — external attack and insider misuse. These events highlight the real risks facing every private clinic in Hong Kong today, and underscore why structured, documented data security is no longer optional.</p>
+    </div>
+    <p class="hero-body">The PHPC Patient Portal is a compliance-ready, interoperable digital layer that sits above your existing clinic management system — strengthening data security, supporting patient privacy, and reducing reliance on informal communication channels.</p>
+    <div class="hero-ctas">
+      <a href="#reality" class="btn-primary">See The PHPC Standard ↓</a>
+      <a href="#pilot" class="btn-outline">Join the Pilot Partner Programme →</a>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-item">
+        <div class="stat-n">217</div>
+        <div class="stat-l">Data breach cases handled&#10;by PCPD in 2024&#10;2024 年 PCPD 處理 217 宗資料外洩個案</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">6×</div>
+        <div class="stat-l">PCPD investigation reports&#10;2023 → 2024&#10;執法報告增加 6 倍</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">HK$10M</div>
+        <div class="stat-l">Maximum proposed fine&#10;under PDPO amendments&#10;(pending)</div>
+      </div>
+      <div class="stat-item" style="border-right:none;">
+        <div class="stat-n">13 Oct 2025</div>
+        <div class="stat-l">DH clinic licence&#10;application commencement&#10;Cap. 633</div>
+      </div>
+    </div>
+    <div class="asl-strip">
+      <div class="asl-dot"></div>
+      <span class="asl-text"><strong>Platform Operator:</strong> a unified technology services partner (Development, Operations &amp; Security) with decades of Hong Kong government healthcare IT experience, including contributions to major public health digital platforms such as HA Go.</span>
+    </div>
+  </div>
+</section>
+
+<!-- BURNING REALITY -->
+<section id="reality">
+  <div class="section-inner-sm">
+    <div class="fade-in" style="text-align:center;margin-bottom:52px;">
+      <div class="eyebrow">燃眉之急 · The Burning Reality</div>
+      <h2>The PHPC Standard</h2>
+      <p class="lead center">Two events in three years. One clear direction for every licensed private clinic in Hong Kong.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-line"></div>
+
+      <!-- Event 1: Private breach -->
+      <div class="timeline-row fade-in">
+        <div class="timeline-date" style="color:#B32A2A;">May 2023</div>
+        <div class="timeline-dot-wrap"><div class="timeline-dot" style="background:#B32A2A;box-shadow:0 0 0 2px #B32A2A40;"></div></div>
+        <div class="timeline-card">
+          <div class="timeline-card-inner" style="border-left:4px solid #B32A2A;">
+            <div class="tc-header">
+              <div>
+                <span class="tag" style="color:#B32A2A;background:#B32A2A18;border:1px solid #B32A2A30;">PRIVATE SECTOR · 100,000 Patients</span>
+                <div class="tc-title">Major Private Clinic Group — Data Incident</div>
+                <div class="tc-cn" style="color:#B32A2A;">私家醫療集團數據事故</div>
+              </div>
+              <div class="tc-icon">🏥</div>
+            </div>
+            <p class="tc-body">Personal data and medical history of approximately 100,000 patients from a leading private healthcare group were compromised following a vulnerability in their clinic management system. The incident was reported to Police, the Department of Health, and the PCPD.</p>
+            <a href="https://www.scmp.com/news/hong-kong/health-environment/article/3219827/personal-data-medical-history-100000-patients-may-have-been-leaked-cyberattack-hong-kong-healthcare" target="_blank" class="src-link">Source: SCMP ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event 2: HA breach -->
+      <div class="timeline-row fade-in">
+        <div class="timeline-date" style="color:#B32A2A;">April 2026</div>
+        <div class="timeline-dot-wrap"><div class="timeline-dot" style="background:#B32A2A;box-shadow:0 0 0 2px #B32A2A40;"></div></div>
+        <div class="timeline-card">
+          <div class="timeline-card-inner" style="border-left:4px solid #B32A2A;">
+            <div class="tc-header">
+              <div>
+                <span class="tag" style="color:#B32A2A;background:#B32A2A18;border:1px solid #B32A2A30;">PUBLIC SECTOR · 56,000 Patients</span>
+                <div class="tc-title">Hospital Authority — Kowloon East Cluster Breach</div>
+                <div class="tc-cn" style="color:#B32A2A;">醫管局九龍東聯網數據外洩</div>
+              </div>
+              <div class="tc-icon">🏛</div>
+            </div>
+            <p class="tc-body">Over 56,000 patient records from the Kowloon East Cluster were leaked, including names, HKID numbers, and surgical procedure details. A contractor with authorised system access downloaded records in violation of contract. Data was subsequently posted on a third-party platform. One arrest was made under the offence of dishonest use of computer — 不誠實使用電腦.</p>
+            <p class="tc-note">Different sector. Different threat. Both in Hong Kong. Neither is an isolated case.</p>
+            <a href="https://www.info.gov.hk/gia/general/202604/04/P2026040400462.htm" target="_blank" class="src-link">Source: HK Gov / HA ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regulatory response -->
+      <div class="timeline-row fade-in">
+        <div class="timeline-date" style="color:#0B7B7B;">13 Oct 2025</div>
+        <div class="timeline-dot-wrap"><div class="timeline-dot" style="background:#0B7B7B;box-shadow:0 0 0 2px #0B7B7B40;"></div></div>
+        <div class="timeline-card">
+          <div class="timeline-card-inner" style="border-left:4px solid #0B7B7B;">
+            <div class="tc-header">
+              <div>
+                <span class="tag" style="color:#0B7B7B;background:#0B7B7B18;border:1px solid #0B7B7B30;">REGULATORY RESPONSE · Cap. 633</span>
+                <div class="tc-title">DH Clinic Licence Application Commencement</div>
+                <div class="tc-cn" style="color:#0B7B7B;">衞生署診所發牌申請展開</div>
+              </div>
+              <div class="tc-icon">⚖️</div>
+            </div>
+            <p class="tc-body">The Department of Health commenced accepting clinic licence applications under Cap. 633 from 13 October 2025, marking the transition of all private clinics to the mandatory licensing regime. Clinics must demonstrate robust patient data security and privacy practices. CMEs are personally accountable for compliance during DH on-site inspections.</p>
+            <a href="https://www.orphf.gov.hk/en/regulatory_regime/new_licensing_scheme" target="_blank" class="src-link">Source: ORPHF ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CME Box -->
+    <div class="cme-box fade-in">
+      <div class="cme-icon">⚕️</div>
+      <div>
+        <div class="cme-eyebrow">CME's Compliance Role · 醫務主管的合規責任</div>
+        <div class="cme-title">Chief Medical Executive — Compliance Obligations Under Cap. 633</div>
+        <p class="cme-body">Under Cap. 633, the Chief Medical Executive (CME) is appointed to take charge of the clinic's day-to-day administration and to help ensure that the clinic operates in compliance with applicable regulatory requirements. In practical terms, this means the CME should oversee whether appropriate systems, policies, and controls are in place to protect patient information, maintain confidentiality, and support proper record handling.</p>
+        <p class="cme-body">During a Department of Health inspection, it is not enough to rely on verbal assurances that staff are careful. The clinic should be able to show documented evidence of its compliance arrangements — including written policies, access controls, audit trails, staff procedures, and other safeguards that demonstrate how sensitive patient information is protected.</p>
+        <p class="cme-body">Where a patient portal or similar digital system is used, it should support compliance by providing structured, documented, and auditable controls. Features such as encryption, access logs, and role-based permissions can help demonstrate that the clinic has put in place practical measures to protect patient data and meet regulatory expectations.</p>
+        <a href="https://www.orphf.gov.hk/en/regulatory_regime/new_licensing_scheme" target="_blank" class="src-link">Source: ORPHF — New Licensing Scheme ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 KEYS -->
+<section id="keys">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:48px;">
+      <div class="eyebrow">六大關鍵 · 6 Keys</div>
+      <h2>6 Keys to Unlock Private Practice</h2>
+      <p class="lead center">A structured response to the compliance and operational challenges every licensed clinic in Hong Kong now faces. Select any key to expand.</p>
+    </div>
+    <div class="keys-grid" id="keys-grid"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:40px;">
+      <div class="eyebrow">功能特點 · Features</div>
+      <h2>Reduce Risk by Addressing the Human Factor</h2>
+      <p class="lead center" style="margin-bottom:20px;">Reduce reliance on messaging channels. For patients who use the portal, sensitive data bypasses staff devices entirely. For those who don't, the risk remains — and that's exactly why adoption matters.</p>
+      <div class="risk-callout">
+        <div class="risk-callout-icon">⚠️</div>
+        <div>
+          <div class="risk-callout-title">The Messaging Channel Risk — A Structural Issue Across the Sector</div>
+          <p class="risk-callout-body">Most clinics maintain a registered business number for WhatsApp and WeChat — listed publicly on promotional channels and search campaigns. Patients routinely send personal photos, identity documents, and sensitive health information through these channels. Without encryption, access controls, or an audit trail, this creates a data exposure risk that clinic policy alone cannot fully address.</p>
+        </div>
+      </div>
+      <div class="toggle-bar">
+        <button class="toggle-btn active" onclick="setView('clinic',this)">For the Clinic</button>
+        <button class="toggle-btn" onclick="setView('patient',this)">For the Patient</button>
+      </div>
+    </div>
+    <div class="features-grid" id="features-grid"></div>
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE -->
+<section id="infra">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:48px;">
+      <div class="eyebrow white">可信基礎設施 · Trusted Infrastructure</div>
+      <h2 class="white">The PHPC Solution — Powered by ASL</h2>
+      <p class="infra-lead" style="margin:0 auto;text-align:center;">Developed and operated by a leading Hong Kong IT company — a unified technology services partner (Development, Operations &amp; Security) with over 50 years of experience supporting government and healthcare organisations across the region. The company has contributed technical infrastructure to projects commissioned by the Department of Health and the Hospital Authority, and has been involved in the development of healthcare digital platforms including the HA Go initiative.</p>
+    </div>
+
+    <div class="flow-box fade-in">
+      <div class="flow-title">How Patient Personal Data Flows — Securely · 病人個人資料安全傳遞流程</div>
+      <div class="flow-grid">
+        <div class="flow-node regular">
+          <div class="flow-node-icon">🧑</div>
+          <div class="flow-node-label">Patient</div>
+          <div class="flow-node-sub">病人</div>
+          <div class="flow-node-item">Books appointment</div>
+          <div class="flow-node-item">Submits Personal Data</div>
+          <div class="flow-node-item">Views own records</div>
+          <div class="flow-node-item">Downloads documents</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-icon">→</div><div class="flow-arrow-label">encrypted</div></div>
+        <div class="flow-node highlight">
+          <div class="flow-node-icon">🔐</div>
+          <div class="flow-node-label">PHPC Portal</div>
+          <div class="flow-node-sub">安全門戶</div>
+          <div class="flow-node-item">AES-256 encryption</div>
+          <div class="flow-node-item">Role-based access</div>
+          <div class="flow-node-item">Full audit log</div>
+          <div class="flow-node-item">Zero business data collected</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-icon">→</div><div class="flow-arrow-label">encrypted</div></div>
+        <div class="flow-node regular">
+          <div class="flow-node-icon">🏛</div>
+          <div class="flow-node-label">Platform Operator</div>
+          <div class="flow-node-sub">ASL</div>
+          <div class="flow-node-item">DevSecOps infrastructure</div>
+          <div class="flow-node-item">eHRSS connectivity</div>
+          <div class="flow-node-item">HK Gov healthcare IT</div>
+          <div class="flow-node-item">HA Go contributor</div>
+        </div>
+        <div class="flow-arrow"><div class="flow-arrow-icon">→</div><div class="flow-arrow-label">CMS sync</div></div>
+        <div class="flow-node regular">
+          <div class="flow-node-icon">👨‍⚕️</div>
+          <div class="flow-node-label">Doctor / Clinic</div>
+          <div class="flow-node-sub">醫生 / 診所</div>
+          <div class="flow-node-item">Encrypted data folder</div>
+          <div class="flow-node-item">Patient record access</div>
+          <div class="flow-node-item">Communication log</div>
+          <div class="flow-node-item">CMS sync</div>
+        </div>
+      </div>
+      <div class="flow-note">Patient Personal Data (text or images) does not pass through staff devices, WhatsApp, or WeChat at any point in this flow.</div>
+    </div>
+
+    <div class="cred-grid">
+      <div class="cred-card fade-in" style="border-top:3px solid #0B7B7B;">
+        <div class="cred-icon">🏛</div>
+        <div class="cred-title">HKEx Listed</div>
+        <div class="cred-cn">香港上市公司</div>
+        <p class="cred-desc">Publicly accountable and regulated, with decades of Hong Kong technology operations</p>
+      </div>
+      <div class="cred-card fade-in" style="border-top:3px solid #0B7B7B;">
+        <div class="cred-icon">🏥</div>
+        <div class="cred-title">Government Healthcare IT</div>
+        <div class="cred-cn">政府醫療IT夥伴</div>
+        <p class="cred-desc">Technical contributions to projects commissioned by DH, HA, and Centre for Health Protection</p>
+      </div>
+      <div class="cred-card fade-in" style="border-top:3px solid #0B7B7B;">
+        <div class="cred-icon">📱</div>
+        <div class="cred-title">HA Go — Contributor</div>
+        <div class="cred-cn">HA Go 開發夥伴</div>
+        <p class="cred-desc">Involved in the development of major public health digital platforms including HA Go</p>
+      </div>
+      <div class="cred-card fade-in" style="border-top:3px solid #0B7B7B;">
+        <div class="cred-icon">🔒</div>
+        <div class="cred-title">Enterprise DevSecOps</div>
+        <div class="cred-cn">企業級安全開發</div>
+        <p class="cred-desc">Development, Security, and Operations integrated — government-standard, enterprise-grade cybersecurity</p>
+      </div>
+    </div>
+
+    <div class="bi-box fade-in">
+      <div class="bi-icon">🚧</div>
+      <div>
+        <div class="bi-title">Data Boundary — Explicit by Design · 數據邊界設計</div>
+        <p class="bi-body">The PHPC Patient Portal is a <strong>patient access layer and healthcare interoperability layer</strong> — it sits above your existing clinic management system without replacing it. It does not collect, store, or analyse any commercial data about the clinic. Business intelligence is generated solely from the clinic's own management system, which the clinic owns and controls entirely. <strong>The portal lets patients see their data. It does not let us see your business.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section id="who">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:40px;">
+      <div class="eyebrow">適用對象 · Who It Serves</div>
+      <h2>One platform. Value for every role.</h2>
+      <p class="lead center">Select a role to see what the PHPC Patient Portal delivers — specifically.</p>
+    </div>
+    <div class="role-tabs" id="role-tabs"></div>
+    <div class="role-panel fade-in" id="role-panel"></div>
+  </div>
+</section>
+
+<!-- PILOT -->
+<section id="pilot">
+  <div class="section-inner-sm">
+    <div class="fade-in" style="text-align:center;margin-bottom:44px;">
+      <div class="eyebrow">試點夥伴計劃 · Pilot Partner Programme</div>
+      <h2>Join Our Pilot Partner Programme</h2>
+      <p class="pilot-teal">Strengthen compliance, security, and operational efficiency.</p>
+      <p class="lead center">Be among the first clinics to implement the PHPC Patient Portal — and strengthen your readiness for DH on-site inspections with proven, structured data security and patient privacy infrastructure.</p>
+    </div>
+
+    <div class="exchange-grid">
+      <div class="exchange-card fade-in" style="border-top:4px solid #0B7B7B;">
+        <div class="exchange-title" style="color:#0B7B7B;">What the clinic contributes</div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#0B7B7B;">→</span><span class="exchange-text">One designated frontline contact who understands your booking and clinic workflow</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#0B7B7B;">→</span><span class="exchange-text">Workflow access for requirements mapping — without disrupting daily operations</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#0B7B7B;">→</span><span class="exchange-text">Participation in structured feedback sessions during the build phase</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#0B7B7B;">→</span><span class="exchange-text">Commitment to soft launch at one designated clinic branch by agreed date</span></div>
+      </div>
+      <div class="exchange-card fade-in" style="border-top:4px solid #8F5000;">
+        <div class="exchange-title" style="color:#8F5000;">What the clinic receives</div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#8F5000;">→</span><span class="exchange-text">Portal tailored to your specialty and clinical workflow — not a generic template</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#8F5000;">→</span><span class="exchange-text">Flexible implementation: customise your clinic's workflow without custom development costs</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#8F5000;">→</span><span class="exchange-text">Seamless integration with your existing clinic management system</span></div>
+        <div class="exchange-row"><span class="exchange-arrow" style="color:#8F5000;">→</span><span class="exchange-text">Dedicated implementation and training support during the pilot phase</span></div>
+      </div>
+    </div>
+
+    <div class="timeline-steps">
+      <div class="step-card fade-in">
+        <div class="step-icon">🗺️</div>
+        <div class="step-phase">Now → Q1 2026</div>
+        <div class="step-label">Requirements</div>
+        <p class="step-detail">Workflow mapping with your designated contact. Service list, booking rules, and CMS integration scoped to your clinic.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-icon">⚙️</div>
+        <div class="step-phase">Q2 2026</div>
+        <div class="step-label">Build &amp; Integrate</div>
+        <p class="step-detail">CMS integration. Portal built to your clinical workflow. Encrypted patient data channel configured and tested.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-icon">🧪</div>
+        <div class="step-phase">Q3 2026</div>
+        <div class="step-label">Testing &amp; Onboarding</div>
+        <p class="step-detail">Staff briefed. Patient cohort identified. Real-user testing and refinement before full launch.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-icon">🚀</div>
+        <div class="step-phase">Q4 2026</div>
+        <div class="step-label">Launch</div>
+        <p class="step-detail">Live at your clinic. Pilot Partner recognition. Dedicated support throughout the implementation phase.</p>
+      </div>
+    </div>
+
+    <div class="cta-box fade-in">
+      <div class="cta-title">Ready to talk? We'll come to you.</div>
+      <p class="cta-body">A 1-hour introduction at your clinic, at your convenience.<br>No commitment required to learn more.</p>
+      <a class="qr-link" href="mailto:IrisPhpc@gmail.com?subject=PHPC%20Pilot%20Programme%20Enquiry&body=Dear%20PHPC%20Team%2C%0A%0AI%20am%20interested%20in%20the%20PHPC%20Patient%20Portal%20and%20would%20like%20to%20participate%20in%20your%20PHPC%20Pilot%20Programme.%20Please%20contact%20me%20at%3A%0A%0AName%3A%20%0AClinic%20Name%3A%20%0AContact%20Number%3A%20%0APreferred%20Contact%20Time%3A%20%0A%0AThank%20you.%0A%0A---%0APHPC%20Pilot%20Programme%0ASecure%20Your%20Practice.%20Protect%20Your%20Patients.%0AThe%20PHPC%20Standard%20for%20private%20healthcare%20in%20Hong%20Kong.">
+        <div class="qr-visual">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+            <rect x="2" y="2" width="22" height="22" rx="2" stroke="#0EA5A5" stroke-width="3" fill="none"/>
+            <rect x="7" y="7" width="12" height="12" rx="1" fill="#0EA5A5"/>
+            <rect x="48" y="2" width="22" height="22" rx="2" stroke="#0EA5A5" stroke-width="3" fill="none"/>
+            <rect x="53" y="7" width="12" height="12" rx="1" fill="#0EA5A5"/>
+            <rect x="2" y="48" width="22" height="22" rx="2" stroke="#0EA5A5" stroke-width="3" fill="none"/>
+            <rect x="7" y="53" width="12" height="12" rx="1" fill="#0EA5A5"/>
+            <rect x="30" y="2" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="34" y="2" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="38" y="2" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="42" y="2" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="30" y="6" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="38" y="6" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="30" y="10" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="34" y="10" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="38" y="10" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="42" y="10" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="26" y="26" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="30" y="26" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="34" y="26" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="38" y="26" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="42" y="26" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="26" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="34" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="42" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="50" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="58" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="66" y="30" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="26" y="34" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="30" y="34" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="38" y="34" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="46" y="34" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="48" y="48" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="52" y="48" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="60" y="48" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="48" y="52" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="56" y="52" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="64" y="52" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="48" y="56" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="52" y="56" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="60" y="56" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+            <rect x="48" y="60" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="56" y="60" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/><rect x="64" y="60" width="3" height="3" rx=".5" fill="#0EA5A5" opacity=".85"/>
+          </svg>
+          <span class="qr-label">CLICK TO ENQUIRE</span>
+        </div>
+        <span class="qr-caption">Opens a pre-filled email — ready to send</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner-md">
+    <div class="about-grid fade-in">
+      <div>
+        <div class="about-eyebrow">關於我們 · About PHPC</div>
+        <div class="about-title">Built from inside Hong Kong's private healthcare sector.</div>
+        <p class="about-body">PHPC was founded on a straightforward observation: Hong Kong's private healthcare sector has world-class doctors operating without the digital infrastructure their patients increasingly expect — and regulators now require.</p>
+        <p class="about-body">The Patient Portal was initiated and shaped by a team with over 20 years of combined frontline experience across Hong Kong's private clinic and medical group sector — spanning business development, clinic operations, patient experience, and regulatory compliance. The programme is advised by a formed group of senior healthcare practitioners dedicated to serving the private sector, ensuring every feature reflects real clinical workflows, not assumptions.</p>
+        <p class="about-body">The platform is developed and operated by a unified technology services partner (Development, Operations &amp; Security) with decades of Hong Kong government healthcare IT experience, including contributions to major public health digital platforms such as HA Go.</p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="stat-card-n">20+</div><div class="stat-card-l">Years of combined frontline HK private healthcare experience — the insight behind every design decision</div></div>
+        <div class="stat-card"><div class="stat-card-n">Senior Advisory Group</div><div class="stat-card-l">Formed group of senior HK private healthcare practitioners advising on clinical, operational, and compliance dimensions</div></div>
+        <div class="stat-card"><div class="stat-card-n">50+</div><div class="stat-card-l">Years of government healthcare IT infrastructure from the platform operator — enterprise-grade security at the foundation</div></div>
+        <div class="stat-card"><div class="stat-card-n">Q4 2026</div><div class="stat-card-l">Target market launch — Pilot Partner programme now open to qualifying clinics</div></div>
+        <div class="stat-card"><div class="stat-card-n">0</div><div class="stat-card-l">Business intelligence collected from your clinic — explicit by design and confirmed by contract</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2L4 5v5c0 3.5 2.5 6.5 6 7.5C14 16.5 16 13.5 16 10V5L10 2z" fill="white" fill-opacity="0.15" stroke="white" stroke-width="1.4"/>
+              <rect x="7.5" y="9" width="5" height="5" rx="1" fill="white"/>
+              <path d="M8.5 9V7.5a1.5 1.5 0 013 0V9" stroke="white" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="logo-text-main">PHPC</div>
+            <div class="logo-text-sub">Patient Portal</div>
+          </div>
+        </a>
+        <p>Secure Your Practice. Protect Your Patients.<span class="dim">The PHPC Standard — Digital Front Door for Private Healthcare</span><span class="dimmer">安全連接病人與私家醫生的健康平台</span></p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Navigation</div>
+          <a href="#reality">For Clinics &amp; CMEs</a>
+          <a href="#who">For Patients</a>
+          <a href="#infra">Security &amp; Compliance</a>
+          <a href="#about">About PHPC</a>
+          <a href="#pilot">Pilot Partner Programme</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">References &amp; Compliance</div>
+          <a href="https://www.orphf.gov.hk/en/regulatory_regime/new_licensing_scheme" target="_blank">ORPHF — Clinic Licensing ↗</a>
+          <a href="https://www.pcpd.org.hk/" target="_blank">PDPO — Privacy Commissioner ↗</a>
+          <a href="https://www.orphf.gov.hk/en" target="_blank">ORPHF — Office for Regulation of PHF ↗</a>
+          <a href="https://www.ehealth.gov.hk/" target="_blank">eHRSS Amendment Ordinance 2025 ↗</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Pilot Enquiries</div>
+          <div class="footer-qr-label">Pilot Partner Programme</div>
+          <div class="footer-qr">
+            <div class="footer-qr-icon">📱</div>
+            <div class="footer-qr-text">QR Code<br>Coming Soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">This website is for professional reference only and is intended for licensed healthcare practitioners and clinic management in Hong Kong. All regulatory references are based on publicly available Hong Kong legislation and government publications. Statistical figures are sourced from publicly available records including PCPD annual reports and Legislative Council briefings. Private organisation names are withheld where applicable. The PHPC Patient Portal is in development — features and timelines are subject to change.</p>
+      <div class="footer-copy">
+        <span>© PHPC Patient Portal Programme 2025 · Confidential · Not for redistribution</span>
+        <span>Governed by the laws of the Hong Kong Special Administrative Region</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── DATA ──
+const TEAL='#0B7B7B',TEAL_BRT='#0EA5A5';
+const KEY_C=[TEAL,'#1A5F9A','#5A3A8A','#8F5000','#1A6B45','#B32A2A'];
+const ROLE_C=[TEAL,'#1A5F9A','#5A3A8A','#8F5000','#1A6B45'];
+
+const KEYS=[
+  {en:'Data Security',cn:'數據安全',icon:'🔐',tag:'Cap. 633 · PDPO DPP4',tagline:'Encrypted by design. Auditable by default.',body:'Patient Personal Data (text or images) moves through an encrypted secure channel — not through messaging apps or staff hands. Every data access is logged and timestamped. When DH or PCPD asks, your answer is a system — not a verbal assurance.'},
+  {en:'Patient Privacy',cn:'病人私隱保障',icon:'🧑',tag:'PDPO DPP6 · Patient Rights',tagline:'Their data belongs to them — and only them.',body:'Patient Personal Data (text or images) is delivered directly into an encrypted clinic folder, accessible only by the authorised doctor. PDPO gives patients the right to access their own health data. The PHPC portal makes that a structural guarantee, not a policy statement.'},
+  {en:'Booking Accuracy',cn:'預約管理優化',icon:'📅',tag:'Operational · No-show Reduction',tagline:'Structured. Confirmed. Fewer errors.',body:'Patients self-book through guided structured forms — correct service, correct doctor, correct slot. Patient selections sync to your clinic management system, with staff confirmation where needed. Automated reminders reduce no-shows. Less relay, fewer mistakes.'},
+  {en:'Operational Efficiency',cn:'診所營運效率',icon:'⚡',tag:'Front Desk · Clinic Manager',tagline:'Admin that handles itself.',body:'Routine enquiries, appointment reminders, post-care instructions, and repeat requests are managed by the portal. Frontline staff focus on patients in the clinic. Especially powerful for chronic disease long-term follow-up patients whose repetitive admin consumes disproportionate staff time every day.'},
+  {en:'Health Record Exchange',cn:'病歷安全傳遞',icon:'📋',tag:'eHRSS · Cap. 633 CoP',tagline:'Safe. Direct. Minimal staff handling.',body:'Lab reports, imaging results, medication records, sick leave certificates, and receipts sync from the clinic management system to the patient portal with minimal staff handling — reducing risk at every step. Patients access their own documents directly. Aligned with the eHRSS Amendment Ordinance 2025.'},
+  {en:'AI-Powered & Future-Ready Practice',cn:'AI 賦能 · 未來診所',icon:'🤖',tag:'Policy Address 2025 · GBA · eHealth+',tagline:'The government is building the highway. This is your on-ramp.',body:'The 2025 Policy Address committed to AI-assisted care, cross-border eHR sharing, and data standardisation across the GBA. A portal-connected practice is infrastructure-ready for what comes next — without requiring doctors to navigate the technology themselves.'},
+];
+
+const FEATURES=[
+  {icon:'📅',color:TEAL,en:'No-shows, handled — before they happen',cn:'自助預約 · CMS 同步',clinic:'Structured booking forms reduce errors from phone or messaging-based bookings. Patient selections sync to your clinic management system, with staff confirmation where needed — less relay, fewer mistakes.',patient:'Book, reschedule, or cancel at any hour — without waiting on hold or sending a message.'},
+  {icon:'🔐',color:'#1A5F9A',en:'Patient Personal Data reaches the clinic\'s encrypted folder — directly',cn:'病人個人資料直達加密資料夾',clinic:'Patient Personal Data (text or images) — personal photos, documents, and health information — flows directly into the clinic\'s secure encrypted folder, reducing the risk of unintended forwarding or unlogged handling.',patient:'Share personal data and health information with your clinic directly and securely — no messaging apps, no intermediary.'},
+  {icon:'📋',color:'#1A6B45',en:'Records in the patient\'s hands — minimal staff handling to reduce risk',cn:'病歷及文件查閱 · 減少人員操作，以降低風險',clinic:'Lab results, imaging reports, medication records, sick leave certificates, and receipts sync from your clinic management system to the patient portal with minimal staff handling — reducing risk of error or unlogged data access at every step.',patient:'View your own records and download your sick leave certificate or receipt — anytime, on your phone.'},
+  {icon:'🔔',color:'#8F5000',en:'Post-care follow-up — automated, logged, and complete',cn:'自動提醒及通知',clinic:'Appointment reminders, post-procedure instructions, and treatment schedules are sent automatically. Minimal staff action required. Every notification is timestamped and logged — no gap in the audit trail.',patient:'Reminders and post-care instructions arrive when they should, without you having to follow up.'},
+  {icon:'💬',color:'#5A3A8A',en:'Patient communications — logged and accountable',cn:'安全醫患通訊',clinic:'Patient queries are logged securely in the portal system, reducing reliance on informal or unrecorded communication channels. The CME can review a full communication record to ensure accountability — particularly valuable during DH on-site inspections.',patient:'Send questions to your clinic directly. Secure. Recorded for your protection.'},
+  {icon:'📢',color:'#B32A2A',en:'Health Feed: present your clinic to every PHPC portal user',cn:'向每位使用者推廣：診所資訊及健康資訊',clinic:'A branded clinic space within the portal: signature services, doctor profiles, health information, and seasonal promotions — delivered directly to registered patients. A marketing channel you own.',patient:'Stay informed about your clinic\'s services and health content in one trusted, secure place.'},
+];
+
+const WHO=[
+  {role:'Business Owner / Doctor',cn:'診所東主 · 醫生',icon:'👨‍⚕️',gets:['Auditable patient data system — demonstrable to DH and PCPD on demand','Patient connection maintained at professional distance — without personal over-commitment','Visibility on booking patterns, no-show rates, and clinic activity','Branded marketing channel reaching registered patients directly']},
+  {role:'CME',cn:'醫務主管',icon:'⚕️',gets:['Cap. 633 compliance — patient records kept secure by infrastructure, not individual discretion','Documented, auditable patient touchpoints ready for DH on-site inspection','PDPO-compliant data architecture — ahead of mandatory breach notification amendments','Full communication log readily available — supporting accountability during inspections']},
+  {role:'Clinic Manager',cn:'診所經理',icon:'📋',gets:['Automated reminders reduce no-shows — minimal staff calling required','Routine patient enquiries managed by the portal, not the front desk','Multi-clinic patient records unified under one system','Frontline team focused on in-clinic care, not phone-based admin']},
+  {role:'Frontline Team',cn:'前線員工',icon:'🧑‍💻',gets:['Repetitive booking calls and routine enquiries handled automatically by the portal','No longer responsible for data you were never trained to protect','Focus on the patients in front of you — not the phone or inbox','Personal risk exposure reduced alongside the clinic\'s compliance position']},
+  {role:'Patient',cn:'病人',icon:'🧑',gets:['Own records, lab results, and documents — accessible anytime, on your phone','Encrypted private channel for Personal Data (text or images) — directly to the clinic\'s secure folder','Book, reschedule, or cancel without waiting on hold or sending messages','Confidence that your most sensitive personal data is protected by design — not by chance']},
+];
+
+// ── RENDER KEYS ──
+let openKey=null;
+function renderKeys(){
+  const g=document.getElementById('keys-grid');
+  g.innerHTML=KEYS.map((k,i)=>`
+    <div class="key-card${openKey===i?' open':''}" onclick="toggleKey(${i})" style="border-top:4px solid ${KEY_C[i]};">
+      <div class="key-header">
+        <span class="key-icon">${k.icon}</span>
+        <span style="display:inline-block;font-size:9.5px;font-weight:700;color:${KEY_C[i]};background:${KEY_C[i]}18;border:1px solid ${KEY_C[i]}30;border-radius:3px;padding:2px 7px;letter-spacing:.05em;text-transform:uppercase;">${k.tag}</span>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div class="key-en">${k.en}</div>
+        <div class="key-cn" style="color:${KEY_C[i]};">${k.cn}</div>
+      </div>
+      <div class="key-tagline">${k.tagline}</div>
+      ${openKey===i?`<p class="key-body">${k.body}</p>`:''}
+      <div class="key-toggle" style="color:${KEY_C[i]};">${openKey===i?'▲ Close':'▼ Learn more'}</div>
+    </div>
+  `).join('');
+}
+function toggleKey(i){openKey=openKey===i?null:i;renderKeys();}
+renderKeys();
+
+// ── RENDER FEATURES ──
+let currentView='clinic';
+function setView(v,btn){
+  currentView=v;
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFeatures();
+}
+function renderFeatures(){
+  const g=document.getElementById('features-grid');
+  g.innerHTML=FEATURES.map(f=>`
+    <div class="feature-card" style="border-left:4px solid ${f.color};">
+      <div class="feature-icon">${f.icon}</div>
+      <div class="feature-en">${f.en}</div>
+      <div class="feature-cn" style="color:${f.color};">${f.cn}</div>
+      <p class="feature-body">${currentView==='clinic'?f.clinic:f.patient}</p>
+    </div>
+  `).join('');
+}
+renderFeatures();
+
+// ── RENDER WHO ──
+let selRole=0;
+function renderWho(){
+  const tabs=document.getElementById('role-tabs');
+  tabs.innerHTML=WHO.map((w,i)=>`
+    <button class="role-tab${selRole===i?' active':''}"
+      style="${selRole===i?`background:${ROLE_C[i]};color:#fff;border-color:${ROLE_C[i]};`:''}"`
+      onclick="selectRole(${i})">${w.icon} ${w.role}</button>
+  `).join('');
+  const w=WHO[selRole],c=ROLE_C[selRole];
+  document.getElementById('role-panel').innerHTML=`
+    <div class="role-panel" style="border-left:6px solid ${c};">
+      <div>
+        <div class="role-icon">${w.icon}</div>
+        <div class="role-title">${w.role}</div>
+        <div class="role-cn" style="color:${c};">${w.cn}</div>
+        <p class="role-desc">Every role in the clinic — and every patient — receives specific, tangible value. The portal is a structured layer that handles what no human should have to manage manually.</p>
+      </div>
+      <div>
+        <div class="gains-label" style="color:${c};">What they gain</div>
+        ${w.gets.map(g=>`
+          <div class="gain-row">
+            <div class="gain-dot-wrap" style="background:${c}18;border:1px solid ${c}30;">
+              <div class="gain-dot" style="background:${c};"></div>
+            </div>
+            <span class="gain-text">${g}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+function selectRole(i){selRole=i;renderWho();}
+renderWho();
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('main-nav').classList.toggle('solid',window.scrollY>80);
+});
+
+// ── FADE IN OBSERVER ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
+
